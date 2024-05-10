@@ -51,12 +51,13 @@ namespace StudentWindowsFrom
             try
             {
                 ds = GetAllEmployees();
-                // create new row to add record
+                
                 DataRow row = ds.Tables["stud"].NewRow();
-                row["name"] = txtStudName.Text;
-                row["age"] = txtStudAge.Text;
+                row["studid"]=txtStudID.Text;
+                row["studname"] = txtStudName.Text;
+                row["studage"] = txtStudAge.Text;
                 row["email"] = txtEmail.Text;
-                //attach row to the emp table
+               
                 ds.Tables["stud"].Rows.Add(row);
                 int result = da.Update(ds.Tables["stud"]);
                 if (result >= 1)
@@ -124,7 +125,30 @@ namespace StudentWindowsFrom
                 MessageBox.Show(ex.Message);
             }
         }
-        private void btnShowList_Click(object sender, EventArgs e)
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ds = GetAllEmployees();
+                DataRow row = ds.Tables["stud"].Rows.Find(txtStudID.Text);
+                if (row != null)
+                {
+                    txtStudName.Text = row["name"].ToString();
+                    txtStudAge.Text = row["age"].ToString();
+                    txtEmail.Text = row["email"].ToString();
+                }
+                else
+                {
+                    MessageBox.Show("Record not inserted");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+        }
+        private void btnShow_Click(object sender, EventArgs e)
         {
             ds = GetAllEmployees();
             dataGridView1.DataSource = ds.Tables["stud"];
