@@ -32,7 +32,7 @@ namespace StudentWindowsFrom
             txtStudAge.Clear();
             txtEmail.Clear();
         }
-        private DataSet GetAllEmployees()
+        private DataSet GetAllStudent()
         {
             string qry = "select * from student";
             da = new SqlDataAdapter(qry, con);
@@ -50,7 +50,7 @@ namespace StudentWindowsFrom
         {
             try
             {
-                ds = GetAllEmployees();
+                ds = GetAllStudent();
                 
                 DataRow row = ds.Tables["stud"].NewRow();
                 row["studid"]=txtStudID.Text;
@@ -72,14 +72,34 @@ namespace StudentWindowsFrom
         }
         private void btnUpdate_Click(object sender, EventArgs e)
         {
+            
+        }
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+           
+        }
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+           
+
+        }
+
+        private void btnShow_Click_1(object sender, EventArgs e)
+        {
+            ds = GetAllStudent();
+            dataGridView1.DataSource = ds.Tables["stud"];
+        }
+
+        private void btnUpdate_Click_1(object sender, EventArgs e)
+        {
             try
             {
-                ds = GetAllEmployees();
+                ds = GetAllStudent();
                 DataRow row = ds.Tables["stud"].Rows.Find(txtStudID.Text);
                 if (row != null)
                 {
-                    row["name"] = txtStudName.Text;
-                    row["age"] = txtStudAge.Text;
+                    row["studname"] = txtStudName.Text;
+                    row["studage"] = txtStudAge.Text;
                     row["email"] = txtEmail.Text;
 
                     int result = da.Update(ds.Tables["stud"]);
@@ -99,11 +119,12 @@ namespace StudentWindowsFrom
                 MessageBox.Show(ex.Message);
             }
         }
-        private void btnDelete_Click(object sender, EventArgs e)
+
+        private void btnDelete_Click_1(object sender, EventArgs e)
         {
             try
             {
-                ds = GetAllEmployees();
+                ds = GetAllStudent();
                 DataRow row = ds.Tables["stud"].Rows.Find(txtStudID.Text);
                 if (row != null)
                 {
@@ -125,16 +146,17 @@ namespace StudentWindowsFrom
                 MessageBox.Show(ex.Message);
             }
         }
-        private void btnSearch_Click(object sender, EventArgs e)
+
+        private void btnSearch_Click_1(object sender, EventArgs e)
         {
             try
             {
-                ds = GetAllEmployees();
+                ds = GetAllStudent();
                 DataRow row = ds.Tables["stud"].Rows.Find(txtStudID.Text);
                 if (row != null)
                 {
-                    txtStudName.Text = row["name"].ToString();
-                    txtStudAge.Text = row["age"].ToString();
+                    txtStudName.Text = row["studname"].ToString();
+                    txtStudAge.Text = row["studage"].ToString();
                     txtEmail.Text = row["email"].ToString();
                 }
                 else
@@ -146,12 +168,6 @@ namespace StudentWindowsFrom
             {
                 MessageBox.Show(ex.Message);
             }
-
-        }
-        private void btnShow_Click(object sender, EventArgs e)
-        {
-            ds = GetAllEmployees();
-            dataGridView1.DataSource = ds.Tables["stud"];
         }
     }
 }
